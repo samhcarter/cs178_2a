@@ -5,20 +5,22 @@
 
 	const minuteIntervals = [1, 5, 10, 15, 30, 60];
 	let selectedInterval = minuteIntervals[4];
+	let mode = 'none';
 	let times = Array(1440 / selectedInterval + 1).fill(0);
-	let namedTimes = times.map((_, i) =>
-		moment('12:00 AM', 'hh:mm A')
-			.add(i * selectedInterval, 'minutes')
-			.format('hh:mm A')
-	);
 	$: if (selectedInterval) {
 		times = Array(1440 / selectedInterval + 1).fill(0);
-		namedTimes = times.map((_, i) =>
-			moment('12:00 AM', 'hh:mm A')
-				.add(i * selectedInterval, 'minutes')
-				.format('hh:mm A')
-		);
 	}
+	const toggleMode = () => {
+		mode = mode === 'select' ? 'none' : 'select';
+	};
+	const onMouseOver = (index = 0) => {
+		if (mode === 'select') {
+			const newTimes = [...times];
+			newTimes[index] = newTimes[index] ? 0 : 1;
+			times = newTimes;
+		}
+	};
+
 	const getTime = (factor = 0) => {
 		return moment('12:00 AM', 'hh:mm A')
 			.add(factor * selectedInterval, 'minutes')
@@ -40,8 +42,20 @@
 	</Group>
 	<div class="vertical-space" />
 	<div class="timeContainer">
-		{#each namedTimes as time}
-			<TimeRow {time} />
+		{#each times as time, i (`${selectedInterval}-${i}`)}
+			<TimeRow
+				{selectedInterval}
+				{time}
+				onClick={() => {
+					toggleMode();
+					onMouseOver(i);
+				}}
+				{onMouseOver}
+				rowIndex={i}
+				reset={() => {
+					mode = 'none';
+				}}
+			/>
 		{/each}
 	</div>
 </div>
