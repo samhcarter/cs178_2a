@@ -9,6 +9,7 @@
 	export let time = 0;
 	export let onClick = () => {};
 	export let onMouseOver = (index = 0) => {};
+	export let onMouseEnter = (index = 0) => {};
 	export let reset = () => {};
 </script>
 
@@ -16,9 +17,11 @@
 	<div class="timeCell">{namedTime}</div>
 	<div
 		class="timeBlockCell {time ? 'available' : 'not-available'}"
+		on:mouseover={() => onMouseOver(rowIndex)}
 		on:mousedown={onClick}
-		on:mouseenter={() => onMouseOver(rowIndex)}
+		on:mouseenter={() => onMouseEnter(rowIndex)}
 		on:mouseup={reset}
+		on:focus={() => {}}
 	/>
 </div>
 
@@ -48,10 +51,10 @@
 		border: 1px solid black;
 	}
 	.available {
-		background-color: green;
+		background-color: lightgreen;
 	}
 	.not-available {
-		background-color: red;
+		background-color: lightcoral;
 	}
 	.timeRow:last-of-type > .timeBlockCell {
 		border: none;
