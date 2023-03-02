@@ -9,8 +9,9 @@
 	
     // TODO: handleOnSubmit, pass name through to backend
 	function handleOnSubmit() {
+        throw redirect(302, '/mycalendar');
 		console.log("Smbmitted");
-        goto(`/days`);
+        // goto(`/days`);
         // throw redirect(307, '/days');
 	}
 </script>
