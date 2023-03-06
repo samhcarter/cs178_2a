@@ -15,6 +15,7 @@
 	let availability_blocks = [[0, 0]];
 	let places = {};
 	let mode = 'none';
+	let showAvail = false;
 	let newPlace = '';
 	let times = Array(1440 / selectedInterval + 1).fill(0);
 	$: if (selectedInterval) {
@@ -73,7 +74,7 @@
 </script>
 
 <div class="tableContainer">
-	<h1 class="tableTitle">DraggableTable</h1>
+	<h2>Time Interval Granularity</h2>
 	<Group>
 		{#each minuteIntervals as interval}
 			<Button
@@ -84,11 +85,24 @@
 		{/each}
 	</Group>
 
-	<div class="availability-overview">
+	<div style="height: 20px" />
+	<Button
+		touch
+		variant="raised"
+		style="width: 30%; height: 3vh"
+		on:click={() => (showAvail = !showAvail)}
+	>
+		<Label>{!showAvail ? 'Show' : 'Hide'} Availability</Label>
+	</Button>
+	<div
+		class="availability-overview"
+		style={`display: ${showAvail ? 'flex' : 'none'}; flex-direction: column;`}
+	>
 		<h2>Available from</h2>
 		<p>
 			{#each availability_blocks as avail}
-				{getTime(avail[0])} to {getTime(avail[1] + 1)}, {' '}
+				{getTime(avail[0])} to {getTime(avail[1] + 1)}
+				<br />
 			{/each}
 		</p>
 	</div>
@@ -96,6 +110,9 @@
 	<div class="timeContainer">
 		{#if showIntervalModal}
 			<div class="intervalModal">
+				<h2>
+					{getTime(currentDisplayedInterval[0])}-{getTime(currentDisplayedInterval[1] + 1)}
+				</h2>
 				{#each availablePlaces as place}
 					<button
 						on:click={() => onClickChip(place)}
@@ -107,12 +124,20 @@
 					</button>
 				{/each}
 				<form
+					id="placeForm"
 					on:submit|preventDefault={() => {
-						availablePlaces = [...availablePlaces, newPlace];
-						newPlace = '';
+						if (newPlace) {
+							availablePlaces = [...availablePlaces, newPlace];
+							newPlace = '';
+						}
 					}}
+					style="display: inline-flex; align-items: center;"
 				>
 					<Textfield variant="filled" bind:value={newPlace} label="Other" class="placeInput" />
+					<div style="width: 5px;" />
+					<Button for="placeForm" touch variant="raised" style="width: 15%; height: 3vh">
+						<Label>Submit</Label>
+					</Button>
 				</form>
 			</div>
 		{/if}
@@ -183,7 +208,6 @@
 		flex-direction: column;
 		align-items: center;
 		height: 90vh;
-		margin: 10vw;
 		position: relative;
 	}
 	.tableTitle {
