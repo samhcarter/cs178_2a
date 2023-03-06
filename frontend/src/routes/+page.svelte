@@ -65,6 +65,8 @@
 			localStorage.setItem(days_array[i], '');
 		}
 
+		active = days_array[0];
+		prevActive = days_array[0];
 	}
 	//let tableState = restoreDraggableTableState(active);
 
