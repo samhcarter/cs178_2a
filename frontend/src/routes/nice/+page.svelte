@@ -120,33 +120,39 @@
 		
 		{#if 'Monday' === active}
 			<h3>{active} content</h3>
+			<DraggableTable />
 		{/if}
 
 		{#if 'Tuesday' === active}
 			<h3>{active} content</h3>
+			<DraggableTable />
 		{/if}
 
 		{#if 'Wednesday' === active}
 			<h3>{active} content</h3>
+			<DraggableTable />
 		{/if}
 
 		{#if 'Thursday' === active}
 			<h3>{active} content</h3>
+			<DraggableTable />
 		{/if}
 
 		{#if 'Friday' === active}
 			<h3>{active} content</h3>
+			<DraggableTable />
 		{/if}
 
 		{#if 'Saturday' === active}
 			<h3>{active} content</h3>
+			<DraggableTable />
 		{/if}
 
 		{#if 'Sunday' === active}
 			<h3>{active} content</h3>
+			<DraggableTable />
 		{/if}
 
-		<DraggableTable />
 
 
 		
