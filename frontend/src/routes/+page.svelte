@@ -16,6 +16,15 @@
 	let seconds = 0;
 	let intervalRef = 0;
 
+	// const draggable_table_array = {
+	// 	'Monday':DraggableTable, 
+	// 	'Tuesday':DraggableTable, 
+	// 	'Wednesday':DraggableTable,
+	// 	'Thursday':DraggableTable, 
+	// 	'Friday':DraggableTable, 
+	// 	'Saturday':DraggableTable, 
+	// 	'Sunday':DraggableTable};
+
 	$: if (currScreen > 1) {
 		clearInterval(intervalRef);
 		const currTimes = JSON.parse(localStorage.getItem('times') || '[]');
@@ -40,8 +49,8 @@
 
 	function save_times() {
 		// TODO: Save time associated with day
-		let times_today = 'selected times placeholder';
-		localStorage.setItem(active, times_today)
+		//let times_today = 'selected times placeholder';
+		//localStorage.setItem(active, times_today)
 	}
 
 	function new_session() {
@@ -49,6 +58,13 @@
 		seconds = 0;
 		name = '';
 	}
+
+	// function return_table(key){
+	// 	return (
+	// 		<div className="">
+	// 		</div>
+	// 	)
+	// }
 
 </script>
 
@@ -116,8 +132,6 @@
 
 
 		</div>
-		
-		
 
 		
 		{#if 'Monday' === active}
