@@ -4,6 +4,7 @@
 	import Textfield from '@smui/textfield';
 	import Button from '@smui/button';
 	import DraggableTable from '../components/DraggableTable/DraggableTable.svelte';
+	import TimezonePicker from 'svelte-timezone-picker';
 	//import active from '../../components/DraggableTable';
 
 	// import { availability_blocks } from '../../components/DraggableTable/DraggableTable.svelte';
@@ -18,6 +19,8 @@
 	let name = '';
 	let seconds = 0;
 	let intervalRef = 0;
+
+	let timezone = 'Europe/London';
 
 	$: if (currScreen > 1) {
 		clearInterval(intervalRef);
@@ -104,6 +107,11 @@
 	</form>
 
 	<div class="drawer-container">
+		<div style="display: inline-flex; align-items: center;">
+			<h1>Timezone</h1>
+			<div style="width: 10px;" />
+			<TimezonePicker {timezone} />
+		</div>
 		<TabBar tabs={days_array} let:tab bind:active>
 			<!-- Note: the `tab` property is required! -->
 			<Tab {tab} on:click={() => change(tab)}>

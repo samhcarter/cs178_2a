@@ -125,7 +125,7 @@
 
 	getTime();
 
-	export { availability_blocks, active, prevActive };
+	export { active, prevActive };
 </script>
 
 <div class="tableContainer">
