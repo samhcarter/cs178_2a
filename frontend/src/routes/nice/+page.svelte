@@ -8,7 +8,18 @@
 	let currScreen = 0;
 	let active = 'Monday';
 	let name = '';
+	let seconds = 0;
+	let intervalRef = 0;
+	$: if (currScreen > 1) {
+		clearInterval(intervalRef);
+		const currTimes = JSON.parse(localStorage.getItem('times') || '[]');
+		console.log(currTimes);
+		currTimes.push(seconds);
+		localStorage.setItem('times', JSON.stringify(currTimes));
+	}
 </script>
+
+<h1>Elapsed Time: {seconds} seconds</h1>
 
 {#if currScreen === 0}
 	<div
@@ -18,6 +29,9 @@
 		<form
 			on:submit|preventDefault={() => {
 				currScreen += 1;
+				intervalRef = window.setInterval(() => {
+					seconds += 1;
+				}, 1000);
 			}}
 			style="display: inline-flex; align-items: center; justify-content: space-between; width: 25%"
 		>
@@ -29,6 +43,16 @@
 	</div>
 {/if}
 {#if currScreen === 1}
+	<form
+		on:submit|preventDefault={() => {
+			currScreen += 1;
+		}}
+		style="display: inline-flex; align-items: center; justify-content: space-between; width: 25%"
+	>
+		<Button touch variant="raised">
+			<Label>Finish</Label>
+		</Button>
+	</form>
 	<div class="drawer-container">
 		<TabBar
 			tabs={['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']}
@@ -42,6 +66,10 @@
 		</TabBar>
 		<DraggableTable />
 	</div>
+{/if}
+
+{#if currScreen > 1}
+	<h1>Finished!</h1>
 {/if}
 
 <style>
