@@ -47,7 +47,7 @@
 
 		prevActive = active;
 		active = newValue;
-		// localStorage.setItem(active, 'changed');
+		
 	}
 
 	function save_times() {
@@ -60,6 +60,11 @@
 		currScreen = 0;
 		seconds = 0;
 		name = '';
+
+		for (let i = 0; i < days_array.length; i++){
+			localStorage.setItem(days_array[i], '');
+		}
+
 	}
 	//let tableState = restoreDraggableTableState(active);
 

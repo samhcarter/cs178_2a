@@ -15,7 +15,7 @@
 	let showIntervalModal = false;
 	let currentDisplayedInterval = [0, 0];
 	let currentDisplayedKey = '';
-	let availability_blocks;
+	export let availability_blocks;
 	// let availability_blocks = JSON.parse(localStorage.getItem('availability_blocks')) || [[0, 0]];
 	$: if (times) {
 		availability_blocks = [...findChunks(times)];
