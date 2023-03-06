@@ -8,6 +8,8 @@
 
 	// import { availability_blocks } from '../../components/DraggableTable/DraggableTable.svelte';
 	// import findChunks from '../../utils/findChunks';
+	import { onMount, onDestroy } from 'svelte';
+	import { writable } from 'svelte/store';
 
 	let currScreen = 0;
 	let days_array = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
@@ -25,6 +27,43 @@
 	// 	'Saturday':DraggableTable, 
 	// 	'Sunday':DraggableTable};
 
+	// Map to store the state of the DraggableTable components keyed by the tab name
+	
+	// let tableState = null;
+	
+	// let draggableTableStateMap = new Map();
+
+	// const stateStore = writable(draggableTableStateMap);
+
+	// function saveDraggableTableState(tabName, draggableTableState) {
+	// 	draggableTableStateMap.set(tabName, draggableTableState);
+	// 	stateStore.set(draggableTableStateMap);
+	// }
+
+	// function restoreDraggableTableState(tabName) {
+	// 	return draggableTableStateMap.get(tabName) || [];
+	// }
+
+	// onMount(() => {
+	// 	// Retrieve the state of the DraggableTable component from the local storage
+	// 	const storedState = localStorage.getItem(active);
+	// 	if (storedState) {
+	// 	tableState = JSON.parse(storedState);
+	// 	} else {
+	// 	tableState = restoreDraggableTableState(active);
+	// 	}
+	// });
+
+	// onDestroy(() => {
+	// 	// Save the state of the DraggableTable component to the local storage when the component is destroyed
+	// 	localStorage.setItem(active, JSON.stringify(tableState));
+	// });
+
+	// function change() {
+	// 	// Save the state of the current DraggableTable before switching tabs
+	// 	saveDraggableTableState(active, tableState);
+	// }
+
 	$: if (currScreen > 1) {
 		clearInterval(intervalRef);
 		const currTimes = JSON.parse(localStorage.getItem('times') || '[]');
@@ -40,17 +79,20 @@
 	}
 
 	// function save_times(){
-	// 	localStorage.setItem(active, JSON.stringify(DraggableTable.));
+	// 	localStorage.setItem(active, JSON.st ringify(DraggableTable.));
 	// }
 
 	function change() {
+	// 	// Save the state of the current DraggableTable before switching tabs
+	// 	saveDraggableTableState(active, tableState);
+
 		localStorage.setItem(active, "changed")
 	}
 
 	function save_times() {
-		// TODO: Save time associated with day
-		//let times_today = 'selected times placeholder';
-		//localStorage.setItem(active, times_today)
+	// 	// TODO: Save time associated with day
+	// 	//let times_today = 'selected times placeholder';
+	// 	//localStorage.setItem(active, times_today)
 	}
 
 	function new_session() {
@@ -58,6 +100,8 @@
 		seconds = 0;
 		name = '';
 	}
+	//let tableState = restoreDraggableTableState(active);
+
 
 	// function return_table(key){
 	// 	return (
@@ -119,24 +163,22 @@
 			</Tab>
 		</TabBar>
 
-		<div class="submit_button">
+		<!-- <div class="submit_button">
 			<Button 
-			touch
-			variant="raised"
-			style="width: 40%; height: 5vh; background:red; align-items: center;justify-content: center"
-			
-			on:click={() => save_times()}>
+				touch
+				variant="raised"
+				style="width: 40%; height: 5vh; background:red; align-items: center;justify-content: center"
+				
+				on:click={() => save_times()}>
 
-			<Label>Click to Save {active}'s Availability</Label>
-		</Button>
-
-
-		</div>
+				<Label>Click to Save {active}'s Availability</Label>
+			</Button>
+		</div> -->
 
 		
 		{#if 'Monday' === active}
 			<h3>{active} content</h3>
-			<DraggableTable />
+			<DraggableTable/>
 		{/if}
 
 		{#if 'Tuesday' === active}
@@ -183,6 +225,9 @@
 	</Button>
 	
 {/if}
+
+
+
 
 <style>
 	.drawer-container {

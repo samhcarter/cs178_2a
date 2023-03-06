@@ -15,7 +15,12 @@
 		let showIntervalModal = false;
 		let currentDisplayedInterval = [0, 0];
 		let currentDisplayedKey = '';
-		let availability_blocks = [[0, 0]];
+		//let availability_blocks = [[0, 0]];
+		let availability_blocks = JSON.parse(localStorage.getItem('availability_blocks')) || [[0, 0]];
+		$: if (times) {
+			availability_blocks = [...findChunks(times)];
+			localStorage.setItem('availability_blocks', JSON.stringify(availability_blocks));
+		}
 		let places = {};
 		let mode = 'none';
 		let showAvail = false;
@@ -78,6 +83,13 @@
 				places = { ...places, [currentDisplayedKey]: new Set([place]) };
 			}
 		};
+
+		onMount(() => {
+			const storedAvailability = localStorage.getItem('availability_blocks');
+			if (storedAvailability) {
+			availability_blocks = JSON.parse(storedAvailability);
+			}
+		});
 	
 		$: if (times) {
 			availability_blocks = [...findChunks(times)];
