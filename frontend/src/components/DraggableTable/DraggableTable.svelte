@@ -1,4 +1,6 @@
 <script>
+// @ts-nocheck
+
 	import Button, { Group, Label } from '@smui/button';
 	import Chip, { Set as ChipSet } from '@smui/chips';
 	import Textfield from '@smui/textfield';
@@ -8,7 +10,7 @@
 
 	let availablePlaces = ['quad', 'sec', 'yard'];
 	const minuteIntervals = [1, 5, 10, 15, 30, 60];
-	let selectedInterval = minuteIntervals[4];
+	let selectedInterval = minuteIntervals[3];
 	let showIntervalModal = false;
 	let currentDisplayedInterval = [0, 0];
 	let currentDisplayedKey = '';
@@ -17,10 +19,12 @@
 	let mode = 'none';
 	let showAvail = false;
 	let newPlace = '';
+	
 	let times = Array(1440 / selectedInterval + 1).fill(0);
 	$: if (selectedInterval) {
 		times = Array(1440 / selectedInterval + 1).fill(0);
 	}
+
 	const toggleMode = () => {
 		mode = mode === 'select' ? 'none' : 'select';
 	};
@@ -70,7 +74,17 @@
 		availability_blocks = [...findChunks(times)];
 	}
 
+	// function save_times(){
+
+	// 	var available_times_JSON = availability_blocks;
+	// 	localStorage.setItem("times", available_times_JSON)
+	// 	availability_blocks = [[0, 0]];
+
+	// }
+
 	getTime();
+
+	export { availability_blocks };
 </script>
 
 <div class="tableContainer">
@@ -106,6 +120,7 @@
 			{/each}
 		</p>
 	</div>
+	
 	<div class="vertical-space" />
 	<div class="timeContainer">
 		{#if showIntervalModal}

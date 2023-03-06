@@ -21,12 +21,13 @@
 	</style>
 </head>
 
-<!-- <nav>
-	<a href="/">1) Update Name</a>
+<nav>
+	<a href="/nice">1) Update Name</a>
+	<!-- <a href="/">1) Update Name</a> -->
 	<a href="/table">2) Update My Availability</a>
 	<a href="/groupcalendar">3) See Group Calendar</a>
 	<a href="/mycalendar">4) TESTNAV</a>
 	<a href="/confirmation_page">5) Confirm and Exit</a>
-</nav> -->
+</nav>
 
 <slot />
