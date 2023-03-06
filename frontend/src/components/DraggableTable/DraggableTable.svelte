@@ -86,6 +86,11 @@
 		}
 	};
 
+	function change_interval(interval){
+		selectedInterval = interval;
+		localStorage.setItem('selected_interval', selectedInterval);
+	}
+
 	// onMount(() => {
 	// 	const storedAvailability = localStorage.getItem('availability_blocks');
 	// 	if (storedAvailability) {
@@ -135,7 +140,7 @@
 			<Button
 				variant="raised"
 				color={selectedInterval === interval ? 'primary' : 'secondary'}
-				on:click={() => (selectedInterval = interval)}><Label>{interval}</Label></Button
+				on:click={() => (change_interval(interval))}><Label>{interval}</Label></Button
 			>
 		{/each}
 	</Group>
