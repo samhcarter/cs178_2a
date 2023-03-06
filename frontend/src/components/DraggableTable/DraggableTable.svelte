@@ -7,7 +7,7 @@
 	import TimeRow from './components/TimeRow.svelte';
 	import moment from 'moment';
 	import findChunks from '../../utils/findChunks';
-	import { onMount } from 'svelte';
+	import { onDestroy, onMount } from 'svelte';
 
 	let availablePlaces = ['quad', 'sec', 'yard'];
 	const minuteIntervals = [1, 5, 10, 15, 30, 60];
@@ -28,6 +28,43 @@
 	let active = '';
 	let prevActive = '';
 
+	onMount(() => {
+		localStorage.setItem('Monday', []);
+		localStorage.setItem('Tuesday', []);
+		localStorage.setItem('Wednesday', []);
+		localStorage.setItem('Thursday', []);
+		localStorage.setItem('Friday', []);
+		localStorage.setItem('Saturday', []);
+		localStorage.setItem('Sunday', []);
+	});
+
+	onDestroy(() => {
+		const all_avails = JSON.parse(localStorage.getItem('all_avails')) || {};
+		// day-interval0-interval1-place
+		for (let place_avail in places) {
+			if (places[place_avail].size === 0) {
+				for (let place of availablePlaces) {
+					const key = `${place_avail}-${place}`;
+					if (key in all_avails) {
+						all_avails[key] += 1;
+					} else {
+						all_avails[key] = 1;
+					}
+				}
+			} else {
+				for (let place of places[place_avail]) {
+					const key = `${place_avail}-${place}`;
+					if (key in all_avails) {
+						all_avails[key] += 1;
+					} else {
+						all_avails[key] = 1;
+					}
+				}
+			}
+		}
+		console.log(all_avails);
+		localStorage.setItem('all_avails', JSON.stringify(all_avails));
+	});
 	// onMount(async () => {
 	// 	const res = await [...findChunks(times)];
 	// 	availability_blocks = await res.json();
@@ -63,7 +100,7 @@
 			if (index >= interval[0] && index <= interval[1]) {
 				showIntervalModal = true;
 				currentDisplayedInterval = interval;
-				currentDisplayedKey = `${interval[0]}-${interval[1]}`;
+				currentDisplayedKey = `${active}-${interval[0]}-${interval[1]}`;
 				return;
 			}
 		}
@@ -86,7 +123,7 @@
 		}
 	};
 
-	function change_interval(interval){
+	function change_interval(interval) {
 		selectedInterval = interval;
 		localStorage.setItem('selected_interval', selectedInterval);
 	}
@@ -134,18 +171,6 @@
 </script>
 
 <div class="tableContainer">
-	<h2>Time Interval Granularity</h2>
-	<Group>
-		{#each minuteIntervals as interval}
-			<Button
-				variant="raised"
-				color={selectedInterval === interval ? 'primary' : 'secondary'}
-				on:click={() => (change_interval(interval))}><Label>{interval}</Label></Button
-			>
-		{/each}
-	</Group>
-
-	<div style="height: 20px" />
 	<Button
 		touch
 		variant="raised"
