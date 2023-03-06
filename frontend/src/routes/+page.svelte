@@ -29,7 +29,6 @@
 		endTime = new Date();
 		const currTimes = JSON.parse(localStorage.getItem('times') || '[]');
 		currTimes.push({ seconds, startTime, endTime });
-
 		localStorage.setItem('times', JSON.stringify(currTimes));
 
 		const currNames = JSON.parse(localStorage.getItem('names') || '[]');
@@ -146,6 +145,9 @@
 {/if}
 
 {#if currScreen > 1}
+	<nav>
+		<a target="_blank" href="/output">R+: Show Best Time and Place For In-Person Meeting</a> 
+	</nav>
 	<h1>Finished! Click below to start a new session</h1>
 
 	<Button on:click={() => new_session()}>
