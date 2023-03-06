@@ -16,6 +16,8 @@
 	let days_array = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
 	let active = days_array[0];
 	let prevActive = days_array[0];
+	let startTime = new Date();
+	let endTime = new Date();
 	let name = '';
 	let seconds = 0;
 	let intervalRef = 0;
@@ -24,8 +26,9 @@
 
 	$: if (currScreen > 1) {
 		clearInterval(intervalRef);
+		endTime = new Date();
 		const currTimes = JSON.parse(localStorage.getItem('times') || '[]');
-		currTimes.push(seconds);
+		currTimes.push({ seconds, startTime, endTime });
 
 		localStorage.setItem('times', JSON.stringify(currTimes));
 
@@ -78,6 +81,7 @@
 		<form
 			on:submit|preventDefault={() => {
 				currScreen += 1;
+				startTime = new Date();
 				intervalRef = window.setInterval(() => {
 					seconds += 1;
 				}, 1000);
