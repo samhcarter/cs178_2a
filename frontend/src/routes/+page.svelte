@@ -12,6 +12,9 @@
 	import { onMount, onDestroy } from 'svelte';
 	import { writable } from 'svelte/store';
 
+	// NOTE: currScreen is our way of integrating the concept of a "session". 
+	// There are 3 screens, which are loaded whenever currScreen changes
+	// One session is a 3-step process in which one user enters their availability for the 53rd week
 	let currScreen = 0;
 	let days_array = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
 	let active = days_array[0];
@@ -24,6 +27,8 @@
 
 	let timezone = 'Europe/London';
 
+	// Way of storing data for DraggableTables
+	// only keeps updating if the same session is maintained (ie currScreen != 0)
 	$: if (currScreen > 1) {
 		clearInterval(intervalRef);
 		endTime = new Date();
@@ -36,10 +41,6 @@
 		localStorage.setItem('names', JSON.stringify(currNames));
 	}
 
-	// function save_times(){
-	// 	localStorage.setItem(active, JSON.st ringify(DraggableTable.));
-	// }
-
 	function change(newValue = '') {
 		// 	// Save the state of the current DraggableTable before switching tabs
 		// 	saveDraggableTableState(active, tableState);
@@ -49,12 +50,7 @@
 		
 	}
 
-	function save_times() {
-		// 	// TODO: Save time associated with day
-		// 	//let times_today = 'selected times placeholder';
-		// 	//localStorage.setItem(active, times_today)
-	}
-
+	// when new session started, local storage is reset and currScreen is set to 0
 	function new_session() {
 		currScreen = 0;
 		seconds = 0;
@@ -67,16 +63,10 @@
 		active = days_array[0];
 		prevActive = days_array[0];
 	}
-	//let tableState = restoreDraggableTableState(active);
 
-	// function return_table(key){
-	// 	return (
-	// 		<div className="">
-	// 		</div>
-	// 	)
-	// }
 </script>
 
+<!-- Timer -->
 <h1>Elapsed Time: {seconds} seconds</h1>
 
 {#if currScreen === 0}
@@ -128,28 +118,20 @@
 				<Label>{tab}</Label>
 			</Tab>
 		</TabBar>
+		
 
-		<!-- <div class="submit_button">
-			<Button 
-				touch
-				variant="raised"
-				style="width: 40%; height: 5vh; background:red; align-items: center;justify-content: center"
-				
-				on:click={() => save_times()}>
-
-				<Label>Click to Save {active}'s Availability</Label>
-			</Button>
-		</div> -->
 		<DraggableTable {active} {prevActive} />
 	</div>
 {/if}
 
 {#if currScreen > 1}
+	<!-- Nav bar shows user option to see "Best Times" concept page -->
 	<nav>
 		<a target="_blank" href="/output">R+: Show Best Time and Place For In-Person Meeting</a> 
 	</nav>
 	<h1>Finished! Click below to start a new session</h1>
 
+	<!-- Click starts a new session -->
 	<Button on:click={() => new_session()}>
 		<Label>Start New Session</Label>
 	</Button>

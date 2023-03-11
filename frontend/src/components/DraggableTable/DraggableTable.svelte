@@ -1,3 +1,7 @@
+<!-- NOTE: This entire file  is the DraggableTable concept, which is the 
+backbone of our scheduling program (it is a Draggable table that records availability
+for a given 24-hour day) -->
+
 <script>
 	// @ts-nocheck
 
@@ -28,6 +32,7 @@
 	let active = '';
 	let prevActive = '';
 
+	// Days,labels for Local Storage:
 	onMount(() => {
 		localStorage.setItem('Monday', []);
 		localStorage.setItem('Tuesday', []);
