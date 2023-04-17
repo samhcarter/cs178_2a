@@ -44,6 +44,16 @@
 	}
 </script>
 
+<!-- 
+	@concept: Time Action Section
+	@purpose: Holds possible actions the user can do with the provided availabilities
+	@state: 
+		- showTimes: boolean that determines whether or not to show the times
+		- availableTimes: array of available times
+	@actions:
+		- toggleVisibility: toggles the visibility of the times
+		- download: downloads the times as a csv file
+-->
 <button on:click={() => (showTimes = true)}>Show Times</button>
 <button on:click={() => download()}>Download Times</button>
 {#if showTimes}

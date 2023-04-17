@@ -56,6 +56,15 @@
 	}
 </script>
 
+<!-- 
+	@concept: Preferred Times List
+	@purpose: Show best times given all availabilities
+	@state: 
+		- showValidMeetings: boolean that determines whether or not to show only 30 minute slots
+		- best_avails: array of available times
+	@actions:
+		- toggleVisibility: toggles the visibility of the times			
+-->
 <button on:click|preventDefault={() => (showValidMeetings = !showValidMeetings)}
 	>{showValidMeetings ? 'Show All 15 Minute Slots' : 'Show Only 30 Minute Slots'}</button
 >
